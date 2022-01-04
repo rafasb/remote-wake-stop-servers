@@ -98,7 +98,7 @@ Para ello debemos de configurar el router, en el apartado de NAT o Servidores vi
 
 1. Encaminaremos el puerto 80 y el puerto 443 hacia el equipo de bajo consumo. Usamos los puertos estándar ya que la pasarela nos permitirá dirigir las peticiones a otras aplicaciones o servicios usando autenticación por usuarios, y cifrado SSL. Debemos usar los puertos estándar ya que es necesario el puerto 80 para la correcta verificación que realizará Let's Encrypt y el puerto 443, dado que muchas redes bloquean el acceso a puertos no estándares. Emplear puertos no estándar es una *protección cutre e inútil*.
 
-2. Encaminaremos el puerto 8888 (esto es un ejemplo) al puerto 8888 (p.e.) y la IP de nuestro denominado `servidor`. En este podemos levantar un servicio en dicho puerto para la aplicación (espero que sobre docker :smile: ) que pretendemos tener accesible en determinados momentos. En la propia aplicación debemos implementar las medidas de seguridad adecudas (cifrado, autenticación, autorización y registros)
+2. Encaminaremos el puerto 8888 (esto es un ejemplo) al puerto 8888 (p.e.) y la IP de nuestro denominado `servidor`. En este podemos levantar un servicio en dicho puerto para la aplicación (espero que sobre docker :smile:) que pretendemos tener accesible en determinados momentos. En la propia aplicación debemos implementar las medidas de seguridad adecudas (cifrado, autenticación, autorización y registros)
 
 Los servicios o aplicaciones encaminadas a la pasarela por el puerto 443 las podemos proteger tanto con el cifrado SSL como por el uso de usuario y contraseña a través de la solución de Nginx Proxy Manager. Este es el caso de las APIs que publicaremos para en encender y apagar.
 
@@ -114,7 +114,7 @@ Para configurar la `pasarela` vamos a emplear varios contenedores:
 
 Cada uno de los contenedores se puede emplear independientemente, por eso mantendré separados los mismos en diferentes ficheros docker-compose.yml. La solución de apagado (contendor API) se podría emplear para el encendido, pero me ha parecido muy interesante la solución `wolweb` y por eso la he incluido.
 
-1. **NPM**
+A) **NPM**
 
 Una vez levantado el contenedor podremos acceder al servicio en el puerto configurado en el fichero docker-compose.yml. Para ponerlo en marcha ejecutamos docker-compose up -d desde el directorio `npm`.
 
@@ -141,7 +141,7 @@ satisfy any;
 
 7. Repetimos los pasos 4 y 5 para la localización `wolweb/sleep`. En esta ocasión apuntamos a la IP de nuestra pasarela y el puerto conficurado en el docker-compose del contenedor `api`
 
-2. **wolweb**
+B) **wolweb**
 
 Es una aplicación obtenida del repositorio https://github.com/sameerdhoot/wolweb donde he incluido las siguientes líneas en el fichero Dockerfile. 
 ```Dockerfile
@@ -154,7 +154,7 @@ Para poner en marcha este contenedor requiere primero crear la imagen y despúes
 
 Esta aplicación es muy interesante y os permite incorporar nuevos equipos desde su interfaz. Desde la misma LAN podéis acceder usando la IP de la pasarela y el puerto 8089, en la ruta **/wolweb**
 
-3. **api**
+C) **api**
 
 Esta es un contenedor muy simple con una API creada con el módulo FastAPI de Python. Dado que está el código Python y su simplicidad, veréis que podéis crear de forma sencilla APIs para otras acciones. Incluso para reemplazar el contenedor `wolweb`. 
 
@@ -174,4 +174,3 @@ https://help.ubuntu.com/community/NetworkManager
 https://ubuntuforums.org/showthread.php?t=2394211
 
 https://github.com/sameerdhoot/wolweb
-
