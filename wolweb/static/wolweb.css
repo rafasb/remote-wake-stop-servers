@@ -1,0 +1,22 @@
+.fas {
+    margin-right: 10px;
+}
+
+.jsgrid-button {
+    min-width: unset !important;
+}
+
+.grid-button {
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 12px !important;
+}
+
+.bs-grid-button {
+    font-size: 18px;
+    min-width: 22px;
+}
+
+.hideMe {
+    display: none;
+}

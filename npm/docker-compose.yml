@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+
+  proxy:
+    image: 'jc21/nginx-proxy-manager:latest'
+    ports:
+      - '80:80'
+      - '8082:81'
+      - '443:443'
+    environment:
+      DB_MYSQL_HOST: "db-npm"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm-user"
+      DB_MYSQL_PASSWORD: "WBF0DEyash3xd9FcPmP8"
+      DB_MYSQL_NAME: "npm-name"
+    volumes:
+      - type: bind
+        source: .datos/npm
+        target: /data
+      - type: bind
+        source: .datos/letsencrypt
+        target: /etc/letsencrypt
+    restart: unless-stopped
+
+  db-npm:
+    image: 'jc21/mariadb-aria:latest'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'm1Scasft25f7i+k7ioYM'
+      MYSQL_DATABASE: 'npm-name'
+      MYSQL_USER: 'npm-user'
+      MYSQL_PASSWORD: 'WBF0DEyash3xd9FcPmP8'
+    volumes:
+      - type: bind
+        source: .datos/mysql-npm
+        target: /var/lib/mysql
+    restart: unless-stopped
+
